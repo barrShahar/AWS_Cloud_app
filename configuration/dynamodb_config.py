@@ -1,7 +1,7 @@
 from configuration.config import REGION
 NAME = "Employees"
 
-# ** see method _create_bucket in AwsDataResources/DynamodbManager.py **
+# ** see method _create_table in AwsDataResources/DynamodbManager.py **
 key_schema = [
     {
         'AttributeName': 'id',

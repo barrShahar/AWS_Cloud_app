@@ -71,12 +71,15 @@ class VPCManager(VpcInterface):
         # Create the security group in the newly created VPC
         self._security_group_manager.create_security_group(self._vpc.id, security_group_params)
 
-    def teardown_vpc_resources(self, tries=0, max_retrying=vpc_config.RETIRES):
+    def teardown_vpc_resources(self, tries=0, max_retrying=vpc_config.RETRIES):
         """
         Tears down the VPC environment by deleting all resources: security groups, subnets_ids, route tables, IGW, and the VPC itself.
 
         :return: Boolean indicating if all resources are successfully deleted
         """
+        if tries >= max_retrying:
+            return
+
         self._logger.debug(f"Attempt to clean VPC Resources {tries + 1}/{max_retrying}")
         try:
             # security group
@@ -85,16 +88,22 @@ class VPCManager(VpcInterface):
             except Exception as e:
                 self._logger.debug(e)
 
+            # The deletion functions catch errors but do not raise them in order to not stop the deletion
+            # of other resources
             deletion_vector = [self.delete_subnets_and_dependencies,
                                self.delete_internet_gateway,
-                               self.delete_subnets_and_dependencies,  # debug
+                               # self.delete_subnets_and_dependencies,  # debug
                                self.delete_route_table,
                                self._security_group_manager.delete_security_group,
                                self.delete_vpc]
 
             is_all_deleted = True
+
             for func in deletion_vector:
                 is_all_deleted = is_all_deleted and func()
+
+            if not is_all_deleted:
+                self.teardown_vpc_resources(tries + 1, max_retrying)
 
         except Exception as e:
             self._logger.error(f"Error during teardown: {e}")
@@ -241,7 +250,6 @@ class VPCManager(VpcInterface):
                     self._vpc.detach_internet_gateway(InternetGatewayId=self._internet_gateway.id)
                 except Exception as e:
                     self._logger.error(f"Error detaching Internet Gateway: {e}")
-                    raise
 
                 self._internet_gateway.delete()
                 self._logger.info(f"Internet Gateway ID: {self._internet_gateway.id} detached and deleted")
@@ -267,7 +275,7 @@ class VPCManager(VpcInterface):
                 self._route_table.delete()
                 self._logger.info(f"Route Table ID: {self._route_table.id} deleted")
                 self._route_table = None
-                return True
+            return True
         except Exception as e:
             self._logger.error(f"Error deleting Route Table: {e}")
             return False

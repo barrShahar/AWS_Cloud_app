@@ -1,12 +1,16 @@
 
-FUNCTION_NAME = 'S3UnzipperFunction'
-ZIP_FILE_URL = 'https://ap-southeast-1-tcprod.s3.ap-southeast-1.amazonaws.com/courses/ILT-TF-100-TECESS/v5.5.8.prod-3b017a1e/lab-3/scripts/sample-photos.zip'
-ROLE_NAME = 'LambdaS3AccessRole'
+# Lambda function configuration
 
-RUNTIME = 'python3.9'
-HANDLER = 'lambda_function.lambda_handler'
-TIMEOUT = 60
-MEMORY_SIZE = 128
+FUNCTION_NAME = 'S3UnzipperFunction'  # The name of the Lambda function
+ZIP_FILE_URL = ('https://ap-southeast-1-tcprod.s3.ap-southeast-1.amazonaws.com/courses/ILT-TF-100-TECESS/v5.5.8.prod'
+                '-3b017a1e/lab-3/scripts/sample-photos.zip')
+ROLE_NAME = 'LambdaS3AccessRole'  # IAM role name for the Lambda function
+
+# Lambda function settings
+RUNTIME = 'python3.9'  # Runtime environment for the Lambda function
+HANDLER = 'lambda_function.lambda_handler'  # Function entry point
+TIMEOUT = 60  # Timeout in seconds for the Lambda function
+MEMORY_SIZE = 128  # Memory size allocated to the Lambda function (MB)
 
 LAMBDA_CLIENT_CREATE_FUNCTION = {
     'Runtime': RUNTIME,

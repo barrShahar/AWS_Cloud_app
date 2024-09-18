@@ -1,9 +1,8 @@
 from configuration.config import REGION
 
 AUTO_SCALING_GROUP_NAME = "employee-auto-scaling"
-
-
 AVAILABILITY_ZONES = [REGION + 'a', REGION + 'b']
+
 MIN_SIZE = 2
 MAX_SIZE = 4
 DESIRED_CAPACITY = 2

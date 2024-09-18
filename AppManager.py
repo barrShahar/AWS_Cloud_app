@@ -119,16 +119,26 @@ class AppManager:
                                        zip_file_url=lambda_config.ZIP_FILE_URL,
                                        lambda_client_create_function_params=lambda_config.LAMBDA_CLIENT_CREATE_FUNCTION)
 
-    def load_bucket_photos_lambda(self, bucket_name, number_of_retires=3):
-        for i in range(number_of_retires):
+    def load_bucket_photos_lambda(self, bucket_name, number_of_retries=3):
+        """
+            Deploys a Lambda function for one-time use to upload employee photos to an S3 bucket.
+            The function may need to be retried due to transitional states, such as invoking
+            the Lambda function while it's still in a pending state or when resources from
+            previous executions have not been fully cleaned up.
+
+            :param bucket_name: The name of the S3 bucket to which the photos will be uploaded.
+            :param number_of_retries: The number of retry attempts in case of failure. Default is 3.
+            :return: None
+        """
+        for i in range(number_of_retries):
             try:  # temporary block for development
-                self.logger.debug(f"Attempt {i+1} for launching uploading photos Lambda")
+                self.logger.debug(f"Attempt {i + 1} to launch the Lambda function for uploading photos")
                 self._create_lambda_helper(bucket_name=bucket_name)
                 return
             except Exception as e:
                 self.logger.debug(e)
                 # wait 20 seconds
-                self.logger.debug("Waiting 20 seconds to try to run lambda again")
+                self.logger.debug("Waiting 20 seconds before retrying Lambda execution")
                 time.sleep(20)
 
 
