@@ -41,7 +41,7 @@ When initializing the app, a one-time Lambda function deploys employee photos to
 
 * **Interactive Menu:** Develop an interactive menu for scaling resources up and down.
 * **Resource Data Persistence:** Implement a feature to save application resource data, allowing it to be reloaded in case of errors or unexpected events.
-* **Go serverless** using Amazon S# for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
+* **Go serverless:** using Amazon S# for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
 * **Documentation:** Create comprehensive documentation and tutorials to guide users in setting up and using the application effectively.
 * **Error Handling and Recovery:** Enhance error handling mechanisms and implement automated recovery processes to improve the application's resilience.
 
