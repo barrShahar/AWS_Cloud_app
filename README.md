@@ -29,6 +29,8 @@ The application is designed to manage AWS infrastructure programmatically with *
 
 ## Current app description:
 I launched an Employee Directory app that uses DynamoDB as a key-value database to store employee information, along with an S3 bucket to store employee photos. The application runs in a custom VPC environment with configured route tables and an internet gateway to ensure secure and scalable networking. When an HTTP request is made, it is routed through an Application Load Balancer (ALB) to EC2 instances hosting the app across multiple Availability Zones. In case of high CPU usage, AWS Auto Scaling automatically scales the number of instances to handle the increased load. The web app displays the Availability Zone you are using and features a CPU-Stress Button for testing auto-scaling functionality.
+When initializing the app, a one-time Lambda function deploys employee photos to the S3 bucket.
+
 <img width="1319" alt="Screenshot 2024-09-18 at 15 51 20" src="https://github.com/user-attachments/assets/5395bbeb-2d4e-44f0-bf1f-0263e92f4548">
 <img width="1382" alt="Screenshot 2024-09-18 at 21 42 27" src="https://github.com/user-attachments/assets/dd1a9f46-b65a-4e29-b552-eea9a21355cf">
 
@@ -38,6 +40,7 @@ I launched an Employee Directory app that uses DynamoDB as a key-value database 
 
 * **Interactive Menu:** Develop an interactive menu for scaling resources up and down.
 * **Resource Data Persistence:** Implement a feature to save application resource data, allowing it to be reloaded in case of errors or unexpected events.
+* Go serverless: using Amazon S# for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
 * **Documentation:** Create comprehensive documentation and tutorials to guide users in setting up and using the application effectively.
 * **Error Handling and Recovery:** Enhance error handling mechanisms and implement automated recovery processes to improve the application's resilience.
 
