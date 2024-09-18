@@ -34,6 +34,14 @@ I launched an Employee Directory app that uses DynamoDB as a key-value database 
 
 <img width="1419" alt="Screenshot 2024-09-18 at 21 41 50" src="https://github.com/user-attachments/assets/b8c27a5b-9e2a-4170-9a54-602543e05e99">
 
+## Room for Improvement
+
+* **Interactive Menu:** Develop an interactive menu for scaling resources up and down.
+* **Resource Data Persistence:** Implement a feature to save application resource data, allowing it to be reloaded in case of errors or unexpected events.
+* **Documentation:** Create comprehensive documentation and tutorials to guide users in setting up and using the application effectively.
+* **Error Handling and Recovery:** Enhance error handling mechanisms and implement automated recovery processes to improve the application's resilience.
+
+
 ## Getting Started
 To run the app, you need to create an IAM role named `EmployeeWebApp` (the name can be changed in the configuration files) that allows EC2 instances to call AWS services on your behalf.
 
