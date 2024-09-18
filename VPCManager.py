@@ -1,5 +1,4 @@
 from botocore.exceptions import WaiterError
-
 from Interfaces.VPCInterface import VpcInterface
 from botocore.client import BaseClient
 from configuration import vpc_config

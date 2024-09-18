@@ -123,8 +123,7 @@ class AppManager:
         """
             Deploys a Lambda function for one-time use to upload employee photos to an S3 bucket.
             The function may need to be retried due to transitional states, such as invoking
-            the Lambda function while it's still in a pending state or when resources from
-            previous executions have not been fully cleaned up.
+            the Lambda function while it's still in a pending state.
 
             :param bucket_name: The name of the S3 bucket to which the photos will be uploaded.
             :param number_of_retries: The number of retry attempts in case of failure. Default is 3.
