@@ -1,4 +1,4 @@
-# AWS Resource Manager Application - Working Progress
+# AWS Resource Manager Application - Work In Progress
 
 ## Overview
 
