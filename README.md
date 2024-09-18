@@ -31,7 +31,8 @@ The application is designed to manage AWS infrastructure programmatically with *
 I launched an Employee Directory app that uses DynamoDB as a key-value database to store employee information, along with an S3 bucket to store employee photos. The application runs in a custom VPC environment with configured route tables and an internet gateway to ensure secure and scalable networking. When an HTTP request is made, it is routed through an Application Load Balancer (ALB) to EC2 instances hosting the app across multiple Availability Zones. In case of high CPU usage, AWS Auto Scaling automatically scales the number of instances to handle the increased load. The web app displays the Availability Zone you are using and features a CPU-Stress Button for testing auto-scaling functionality.
 When initializing the app, a one-time Lambda function deploys employee photos to the S3 bucket.
 
-<img width="1319" alt="Screenshot 2024-09-18 at 15 51 20" src="https://github.com/user-attachments/assets/5395bbeb-2d4e-44f0-bf1f-0263e92f4548">
+<img width="1323" alt="Screenshot 2024-09-18 at 22 13 18" src="https://github.com/user-attachments/assets/514da6b2-5814-4615-85ee-372bb260f01a">
+
 <img width="1382" alt="Screenshot 2024-09-18 at 21 42 27" src="https://github.com/user-attachments/assets/dd1a9f46-b65a-4e29-b552-eea9a21355cf">
 
 <img width="1419" alt="Screenshot 2024-09-18 at 21 41 50" src="https://github.com/user-attachments/assets/b8c27a5b-9e2a-4170-9a54-602543e05e99">
