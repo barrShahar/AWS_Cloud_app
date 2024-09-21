@@ -1,8 +1,3 @@
-import boto3
-from configuration.config import REGION
-from configuration import s3_config, dynamodb_config
-import AwsDataResources
-from utils.NameGeneratorDNS import generate_unique_dns_name
 from AwsDataResources.DataInterfaces.RDSInterface import RDSInterface
 
 

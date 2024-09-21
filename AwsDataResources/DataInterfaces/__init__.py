@@ -1,3 +1,2 @@
-from AwsDataResources.DataInterfaces import IS3Manager
 from AwsDataResources.DataInterfaces import IS3Policy
 from AwsDataResources.DataInterfaces import RDSInterface

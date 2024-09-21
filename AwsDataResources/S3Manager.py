@@ -1,6 +1,5 @@
 import os
-
-from AwsDataResources.DataInterfaces.IS3Manager import RDSInterface
+from AwsDataResources.DataInterfaces import RDSInterface
 from utils.Logger import Logger
 from configuration.s3_config import DEFAULT_S3_BUCKETS_REGION
 from AwsDataResources.DataInterfaces.IS3Policy import IS3Policy

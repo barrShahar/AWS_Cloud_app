@@ -1,17 +1,13 @@
 import boto3
 
-from NetworkResources import *
-from AwsDataResources import *
+from NetworkResources import SecurityGroupManager, ListenerManager, TargetGroupApplicationManager
+from NetworkResources import AutoScalingManager, ApplicationLoadBalancerManager, LaunchTemplateManager
+from AwsDataResources import S3Manager, DynamodbManager
 from VPCManager import VPCManager
 from RDSManager import RDSManager
 from utils.NameGeneratorDNS import generate_unique_dns_name
 from LambdaManagerEmployee import LambdaManagerEmployee
 import configuration as cfg
-
-
-def auto_scalling_manager(logger):
-    return AutoScalingManager(name=cfg.asg_config.AUTO_SCALING_GROUP_NAME,
-                              logger=logger)
 
 
 class AWSResourceFactory:
@@ -122,9 +118,7 @@ class AWSResourceFactory:
 
     def rds_manager(self):
         resources = dict()
-        resources['S3Manager'] = (
-            self.s3_manager())
-        resources['DynamodbManager'] = (
-            self.dynamodb_manager())
+        resources['S3Manager'] = (self.s3_manager())
+        resources['DynamodbManager'] = (self.dynamodb_manager())
 
         return RDSManager(resources=resources, logger=self._logger)

@@ -3,7 +3,7 @@ import time
 from AWSResourceFactory import AWSResourceFactory
 from NetworkResources.Interfaces.TargetGroupInterface import TargetGroupInterface
 import Interfaces
-from configuration import *
+from configuration import config, asg_config, alb_config, lambda_config, vpc_config, ec2_config
 
 
 class AppManager:

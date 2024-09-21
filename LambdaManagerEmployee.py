@@ -1,19 +1,21 @@
 import time
-
 import boto3
 import json
 import zipfile
 import io
-
 from botocore.exceptions import ClientError
-
-from AwsDataResources import S3Manager
-from utils.Logger import Logger
 from configuration import lambda_config
 
 
 class LambdaManagerEmployee:
-    def __init__(self, function_name, role_name, lambda_client, iam_client, s3_client, logger):
+    def __init__(self,
+                 function_name: str,
+                 role_name: str,
+                 lambda_client: boto3.client,
+                 iam_client: boto3.client,
+                 s3_client: boto3.client,
+                 logger
+                 ):
         self._role_name = role_name
         self._function_name = function_name
         self.lambda_client = lambda_client
@@ -88,11 +90,11 @@ class LambdaManagerEmployee:
                     Role=role_arn,
                     Code={'ZipFile': zip_buffer.read()},
                     Environment={
-                                    'Variables': {
-                                        'DEST_BUCKET': bucket_name,
-                                        'ZIP_FILE_URL': zip_file_url
-                                    }
-                                },
+                        'Variables': {
+                            'DEST_BUCKET': bucket_name,
+                            'ZIP_FILE_URL': zip_file_url
+                        }
+                    },
                     **lambda_client_create_function_params
                 )
 
