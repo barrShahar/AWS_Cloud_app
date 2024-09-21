@@ -1,5 +1,3 @@
-# import AwsDataResources.DataInterfaces
-# from AwsDataResources.DataInterfaces.RDSInterface import RDSInterface
 
 from AwsDataResources.S3Manager import S3Manager
 from AwsDataResources.BucketPolicy import DefaultBucketPolicy
