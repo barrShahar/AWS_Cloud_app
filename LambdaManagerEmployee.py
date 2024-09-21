@@ -1,7 +1,12 @@
+import time
+
 import boto3
 import json
 import zipfile
 import io
+
+from botocore.exceptions import ClientError
+
 from AwsDataResources import S3Manager
 from utils.Logger import Logger
 from configuration import lambda_config
@@ -47,6 +52,9 @@ class LambdaManagerEmployee:
             s3_policy_arn = 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
             self.iam_client.attach_role_policy(RoleName=role_name, PolicyArn=s3_policy_arn)
 
+            # Wait until the role is fully propagated
+            self.wait_for_role(role_name)
+
             return role['Role']['Arn']
         except Exception as e:
             self.logger.error(f"Error creating IAM role: {e}")
@@ -89,6 +97,10 @@ class LambdaManagerEmployee:
                 )
 
             self.logger.info(f"Created or updated Lambda function {self._function_name}")
+
+            # Wait until the Lambda function is active
+            self.wait_for_lambda_active()
+
             return response
         except Exception as e:
             self.logger.error(f"Error creating or updating Lambda function: {e}")
@@ -130,42 +142,48 @@ class LambdaManagerEmployee:
                                               lambda_client_create_function_params=lambda_client_create_function_params)
         self.invoke_lambda_function()
 
-#
-# if __name__ == '__main__':
-#     logger = Logger()  # Initialize logger
-#
-#     s3_resource = boto3.resource('s3')  # Initialize S3 resource
-#     s3_client = boto3.client('s3')  # Initialize S3 client
-#     lambda_client = boto3.client('lambda')  # Initialize Lambda client
-#     iam_client = boto3.client('iam')  # Initialize IAM client
-#     zip_file_url = 'https://ap-southeast-1-tcprod.s3.ap-southeast-1.amazonaws.com/courses/ILT-TF-100-TECESS/v5.5.8.prod-3b017a1e/lab-3/scripts/sample-photos.zip'
-#
-#     from configuration import s3_config  # Import S3 configuration
-#
-#     s3_manager = S3Manager(
-#         s3=s3_resource,
-#         s3_client=s3_client,
-#         bucket_name=s3_config.S3_BUCKET_BASE_NAME,
-#         region=s3_config.REGION,
-#         logger=logger
-#     )
-#
-#     lambda_manager = LambdaManagerEmployee(
-#         lambda_client=lambda_client,
-#         iam_client=iam_client,
-#         s3_client=s3_client,
-#         logger=logger
-#     )
-#
-#     try:
-#         s3_manager.setup()  # Setup S3 resources
-#
-#         # Deploy Lambda function with source and destination buckets
-#         # source_bucket = 'https://ap-southeast-1-tcprod.s3.ap-southeast-1.amazonaws.com/courses/ILT-TF-100-TECESS/v5.5.8.prod-3b017a1e/lab-3/scripts/sample-photos.zip'
-#         source_bucket = "ap-southeast-1-tcprod"  # Source bucket from the URL
-#         lambda_manager.deploy_lambda(bucket_name=s3_manager.bucket_dns_name, zip_file_url=zip_file_url)
-#     except Exception as e:
-#         logger.debug(e)  # Log any errors that occur
-#     finally:
-#         s3_manager.clean_resources()  # Clean up S3 resources
-#         # lambda_manager.clean_resources()  # Clean up Lambda resources
+    def wait_for_role(self, role_name, timeout=60, interval=5):
+        """Wait until the IAM role is available."""
+        start_time = time.time()
+        while True:
+            try:
+                self.iam_client.get_role(RoleName=role_name)
+                self.logger.info(f"IAM role {role_name} is now available.")
+                break
+            except self.iam_client.exceptions.NoSuchEntityException:
+                if time.time() - start_time > timeout:
+                    self.logger.error(f"Timeout waiting for IAM role {role_name} to become available.")
+                    raise
+                self.logger.debug(f"Waiting for IAM role {role_name} to become available...")
+                time.sleep(interval)
+            except ClientError as e:
+                self.logger.error(f"Unexpected error while waiting for IAM role: {e}")
+                raise
+
+    def wait_for_lambda_active(self, timeout=60, interval=5):
+        """Wait until the Lambda function is in Active state."""
+        start_time = time.time()
+        while True:
+            try:
+                response = self.lambda_client.get_function(FunctionName=self._function_name)
+                state = response['Configuration']['State']
+                if state == 'Active':
+                    self.logger.info(f"Lambda function {self._function_name} is now active.")
+                    break
+                else:
+                    if time.time() - start_time > timeout:
+                        self.logger.error(
+                            f"Timeout waiting for Lambda function {self._function_name} to become active.")
+                        raise TimeoutError(
+                            f"Lambda function {self._function_name} did not become active within {timeout} seconds.")
+                    self.logger.debug(f"Lambda function {self._function_name} is in state {state}. Waiting...")
+                    time.sleep(interval)
+            except self.lambda_client.exceptions.ResourceNotFoundException:
+                if time.time() - start_time > timeout:
+                    self.logger.error(f"Timeout waiting for Lambda function {self._function_name} to become available.")
+                    raise
+                self.logger.debug(f"Lambda function {self._function_name} not found. Waiting...")
+                time.sleep(interval)
+            except ClientError as e:
+                self.logger.error(f"Unexpected error while waiting for Lambda function: {e}")
+                raise

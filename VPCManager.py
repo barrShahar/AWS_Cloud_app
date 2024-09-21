@@ -91,7 +91,6 @@ class VPCManager(VpcInterface):
             # of other resources
             deletion_vector = [self.delete_subnets_and_dependencies,
                                self.delete_internet_gateway,
-                               # self.delete_subnets_and_dependencies,  # debug
                                self.delete_route_table,
                                self._security_group_manager.delete_security_group,
                                self.delete_vpc]
