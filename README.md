@@ -1,4 +1,4 @@
-# AWS Resource Manager Application - Working Progress
+# AWS Resource Manager Application - Work In Progress
 
 ## Overview
 
@@ -39,9 +39,9 @@ When initializing the app, a one-time Lambda function deploys employee photos to
 
 ## Room for Improvement
 
-* **Interactive Menu:** Develop an interactive menu for scaling resources up and down.
+* **Interactive Menu:** Develop an interactive menu, giving more control to the user. 
 * **Resource Data Persistence:** Implement a feature to save application resource data, allowing it to be reloaded in case of errors or unexpected events.
-* **Go serverless:** using Amazon S# for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
+* **Go Serverless:** using Amazon S# for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
 * **Documentation:** Create comprehensive documentation and tutorials to guide users in setting up and using the application effectively.
 * **Error Handling and Recovery:** Enhance error handling mechanisms and implement automated recovery processes to improve the application's resilience.
 
