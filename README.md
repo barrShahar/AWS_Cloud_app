@@ -12,9 +12,9 @@ The application is designed to manage AWS infrastructure programmatically with *
 - **VPC creation** with custom subnets and security groups.
 - Launch and configure **EC2 instances** with custom user data scripts.
 - Configure and manage **Application Load Balancers (ALB)** and target groups.
-- Set up and manage **RDS databases**.
+- Set up and manage **RDS databases** such as **S3 buckets** and **DynamoDB**.
 - **Auto Scaling** configuration for handling dynamic scaling requirements.
-- Manage **S3 buckets** and **Lambda functions**.
+- Manage **Lambda functions**.
 
 ### OOP-Based Design:
 - Follows **SOLID principles** with specialized classes for different AWS services, such as:
@@ -41,7 +41,7 @@ When initializing the app, a one-time Lambda function deploys employee photos to
 
 * **Interactive Menu:** Develop an interactive menu, giving more control to the user. 
 * **Resource Data Persistence:** Implement a feature to save application resource data, allowing it to be reloaded in case of errors or unexpected events.
-* **Go Serverless:** using Amazon S# for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
+* **Go Serverless:** using Amazon S3 for static website hosting and use AWS Lambda for backend Processing triggered via Amazon API Gateway
 * **Documentation:** Create comprehensive documentation and tutorials to guide users in setting up and using the application effectively.
 * **Error Handling and Recovery:** Enhance error handling mechanisms and implement automated recovery processes to improve the application's resilience.
 
