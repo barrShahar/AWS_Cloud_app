@@ -12,9 +12,9 @@ The application is designed to manage AWS infrastructure programmatically with *
 - **VPC creation** with custom subnets and security groups.
 - Launch and configure **EC2 instances** with custom user data scripts.
 - Configure and manage **Application Load Balancers (ALB)** and target groups.
-- Set up and manage **RDS databases** such as **S3 buckets** and **DynamoDB**.
+- Set up and manage **RDS databases**.
 - **Auto Scaling** configuration for handling dynamic scaling requirements.
-- Manage **Lambda functions**.
+- Manage **S3 buckets** and **Lambda functions**.
 
 ### OOP-Based Design:
 - Follows **SOLID principles** with specialized classes for different AWS services, such as:
